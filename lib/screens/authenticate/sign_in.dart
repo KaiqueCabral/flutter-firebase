@@ -18,11 +18,11 @@ class _SignInState extends State<SignIn> {
   String email;
   String password;
   String error = "";
-  bool _loading = false;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return _loading
+    return isLoading
         ? Loading()
         : Scaffold(
             backgroundColor: Colors.blue[100],
@@ -97,7 +97,7 @@ class _SignInState extends State<SignIn> {
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
-                          setState(() => _loading = true);
+                          setState(() => isLoading = true);
                           var result = await _auth.signInWithEmailPassword(
                               email, password);
 
@@ -105,9 +105,12 @@ class _SignInState extends State<SignIn> {
                             setState(() {
                               error =
                                   "Could not sign in with those credentials.";
-                              _loading = false;
                             });
+                          } else {
+                            print(result);
                           }
+
+                          setState(() => isLoading = false);
                         }
                       },
                     ),

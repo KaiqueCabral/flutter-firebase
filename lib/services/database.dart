@@ -11,6 +11,10 @@ class DatabaseService {
         );
   }
 
+  Future<DocumentReference> addDocument(Map data) {
+    return reference.reference().add(data);
+  }
+
   Future<QuerySnapshot> getDataCollection() {
     return reference.getDocuments();
   }
@@ -23,15 +27,11 @@ class DatabaseService {
     return reference.reference().document(id).get();
   }
 
-  Future<void> removeDocument(String id) {
-    return reference.reference().document(id).delete();
-  }
-
-  Future<DocumentReference> addDocument(Map data) {
-    return reference.reference().add(data);
-  }
-
   Future<void> updateDocument(Map data, String id) {
     return reference.reference().document(id).updateData(data);
+  }
+
+  Future<void> deleteDocument(String id) {
+    return reference.reference().document(id).delete();
   }
 }

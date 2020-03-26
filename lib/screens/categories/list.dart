@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/category.model.dart';
-import 'package:flutter_firebase/models/user.dart';
+import 'package:flutter_firebase/models/user.model.dart';
 import 'package:flutter_firebase/screens/categories/add_update.dart';
 import 'package:flutter_firebase/repositories/category.repository.dart';
 import 'package:flutter_firebase/screens/categories/list_item.dart';
@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final user = Provider.of<UserModel>(context);
 
     final _repository = new CategoryRepository(uid: user.uid);
     return StreamProvider<List<CategoryModel>>.value(

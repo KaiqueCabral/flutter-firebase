@@ -12,6 +12,10 @@ class CategoryRepository {
     );
   }
 
+  Future<void> addCategory(CategoryModel category) async {
+    await _api.addDocument(category.toJson());
+  }
+
   List<CategoryModel> getCategoryModel(QuerySnapshot snapshot) {
     return snapshot.documents
         .map(
@@ -28,12 +32,12 @@ class CategoryRepository {
     return CategoryModel.fromJson(doc.data, doc.documentID);
   }
 
-  Future<void> addCategory(CategoryModel category) async {
-    await _api.addDocument(category.toJson());
-  }
-
   Future<void> updateCategory(CategoryModel category, String documentID) async {
     await _api.updateDocument(category.toJson(), documentID);
+  }
+
+  Future<void> deleteCategory(String documentID) async {
+    await _api.deleteDocument(documentID);
   }
 
   //get cateogires Stream

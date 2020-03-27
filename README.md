@@ -43,66 +43,10 @@ File: android/build.gradle (WARNING! It's another file)
 
 ## How to make it work on Web
 
+I recommend you to click in "Raw" in the beginning of this page.
+
 File: web/index.html
 1. Open the file: web/index.html
 2. Go to Firebase > Select the project > Settings > General > Your Applications > Web > Copy the content
-3. You have to past before the script "main.dart.js". Your file will look like this:
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="flutter_firebase">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
-
-  <title>flutter_firebase</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('flutter_service_worker.js');
-      });
-    }
-  </script>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-firestore.js"></script>
-
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-      https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-analytics.js"></script>
-
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "[YOUR_API]",
-      authDomain: "[YOUR_AUTH_DOMAIN]",
-      databaseURL: "[YOUR_DATABASE_URL]",
-      projectId: "[YOUR_PROJECT_ID]",
-      storageBucket: "[YOUR_STORAGE_BUCKET]",
-      messagingSenderId: "[YOUR_MESSAGING_SENDER_ID]",
-      appId: "[YOUR_APP_ID]",
-      measurementId: "[YOUR_MEASUREMENT_ID]"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-  </script>
-  <script src="main.dart.js" type="application/javascript"></script>
-</body>
-</html>
+3. You have to past before the script "main.dart.js". Your file will look like this file: 
+[Web Configuration](https://raw.githubusercontent.com/KaiqueCabral/flutter-firebase/master/web.html.md)

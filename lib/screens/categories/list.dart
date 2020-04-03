@@ -8,11 +8,12 @@ import 'package:flutter_firebase/shared/master.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatelessWidget {
+  static const String routeName = "/categories-list";
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
+    final _repository = CategoryRepository();
 
-    final _repository = new CategoryRepository(uid: user.uid);
     return StreamProvider<List<CategoryModel>>.value(
       value: _repository.categories,
       child: MasterScreen(

@@ -8,6 +8,8 @@ import 'package:flutter_firebase/shared/master.dart';
 import 'package:provider/provider.dart';
 
 class CategoryAddUpdate extends StatefulWidget {
+  static const String routeName = "/categories-add-update";
+
   final CategoryModel category;
   CategoryAddUpdate({this.category});
   @override
@@ -23,7 +25,7 @@ class _CategoryAddUpdateState extends State<CategoryAddUpdate> {
   Widget build(BuildContext context) {
     final bool isUpdate = widget.category != null;
     final user = Provider.of<UserModel>(context);
-    final _categoryDatabase = new CategoryRepository(uid: user.uid);
+    final _categoryDatabase = new CategoryRepository();
 
     return MasterScreen(
       title: "${isUpdate ? "Update" : "Add"} Category",

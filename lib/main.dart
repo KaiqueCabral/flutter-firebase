@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/user.model.dart';
+import 'package:flutter_firebase/screens/authenticate/sign_in.dart';
+import 'package:flutter_firebase/screens/categories/list.dart';
+import 'package:flutter_firebase/screens/home/home.dart';
 import 'package:flutter_firebase/screens/wrapper.dart';
 import 'package:flutter_firebase/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +12,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return StreamProvider<UserModel>.value(
@@ -24,6 +26,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: Wrapper(),
+        routes: <String, WidgetBuilder>{
+          CategoriesScreen.routeName: (BuildContext context) =>
+              CategoriesScreen(),
+          Home.routeName: (BuildContext context) => Home(),
+          SignIn.routeName: (BuildContext context) => SignIn(),
+        },
       ),
     );
   }

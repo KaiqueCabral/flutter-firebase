@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/screens/home/home.dart';
 import 'package:flutter_firebase/services/auth.dart';
 import 'package:flutter_firebase/shared/decorations.dart';
 import 'package:flutter_firebase/shared/loading.dart';
 import 'package:flutter_firebase/shared/validations.dart';
 
 class SignIn extends StatefulWidget {
+  static const String routeName = "/login";
   final Function toggleView;
   SignIn({this.toggleView});
 
@@ -62,7 +64,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
-                      initialValue: "",
+                      initialValue: "kaiquecabral@gmail.com",
                       decoration:
                           textInputDecoration.copyWith(labelText: "E-mail"),
                       validator: (val) => val.isEmpty || !validateEmail(val)
@@ -75,6 +77,7 @@ class _SignInState extends State<SignIn> {
                     ),
                     TextFormField(
                       keyboardType: TextInputType.visiblePassword,
+                      initialValue: "123123",
                       decoration:
                           textInputDecoration.copyWith(labelText: "Password"),
                       obscureText: true,
@@ -107,7 +110,8 @@ class _SignInState extends State<SignIn> {
                                   "Could not sign in with those credentials.";
                             });
                           } else {
-                            print(result);
+                            Navigator.of(context)
+                                .pushReplacementNamed(Home.routeName);
                           }
 
                           setState(() => isLoading = false);

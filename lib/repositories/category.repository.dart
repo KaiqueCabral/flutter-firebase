@@ -3,13 +3,10 @@ import 'package:flutter_firebase/models/category.model.dart';
 import 'package:flutter_firebase/services/database.dart';
 
 class CategoryRepository {
-  final String uid;
+  //final String uid;
   DatabaseService _api;
-  CategoryRepository({this.uid}) {
-    _api = DatabaseService(
-      collection: "Categories",
-      uid: uid,
-    );
+  CategoryRepository() {
+    _api = DatabaseService(collection: "Categories");
   }
 
   Future<void> addCategory(CategoryModel category) async {

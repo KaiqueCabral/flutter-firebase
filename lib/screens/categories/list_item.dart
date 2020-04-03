@@ -17,8 +17,7 @@ class _CategoryTileState extends State<CategoryTile> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel>(context);
-    final CategoryRepository _repository =
-        new CategoryRepository(uid: user.uid);
+    final CategoryRepository _repository = new CategoryRepository();
 
     twoButtonsDialog(CategoryModel category) {
       AlertDialog _dialog = AlertDialog(

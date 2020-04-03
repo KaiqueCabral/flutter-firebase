@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/screens/authenticate/sign_in.dart';
 import 'package:flutter_firebase/services/auth.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -29,6 +30,9 @@ class _MasterScreenState extends State<MasterScreen> {
                 FlatButton.icon(
                   onPressed: () async {
                     await _auth.signOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        SignIn.routeName, (route) => false);
+                    //Navigator.of(context).pop(context);
                   },
                   icon: Icon(
                     Icons.person,

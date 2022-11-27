@@ -7,14 +7,14 @@ The project also works on Flutter Web, but you need to do some changes.
 Follow these steps to make the project work on your machine:
 
 On [Firebase Console](https://console.firebase.google.com/):
-To know how to do it, you can use this link:
+To learn how to do it, you watch the video here:
 https://www.youtube.com/watch?v=Wa0rdbb53I8&list=PL4cUxeGkcC9j--TKIdkb3ISfRbJeJYQwC&index=2
 
 The playlist is very good, I recommend.
 
 On your machine (I'm assuming you already have Flutter installed):
 1. Open VS Code (Or Android Studio)
-2. Create a new Project of Flutter
+2. Create a new Flutter project
 3. Copy the folder LIB (From this repository)
 4. Paste (overwrite) the folder in your project
 5. See below how to make it work for both Flutter Web and Android

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Loading extends StatelessWidget {
+class CircularLoading extends StatelessWidget {
+  const CircularLoading({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SizedBox(
         height: 100,
         width: 100,

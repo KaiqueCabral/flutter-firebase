@@ -1,100 +1,96 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_firebase/models/user.model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user.model.dart';
+import '../shared/result.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //Create User Object base on FirebaseUser
-  UserModel _userFromFirebaseUser(FirebaseUser user) {
-    return (user != null)
-        ? UserModel(
-            uid: user.uid,
-            name: user.displayName,
-            email: user.email,
-          )
-        : null;
+  UserModel _userFromFirebaseUser(User? user) {
+    return UserModel(uid: user!.uid, email: user.email!);
   }
 
-  //Auth Change User Stream
   Stream<UserModel> get user {
-    return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
+    return _auth.authStateChanges().map(_userFromFirebaseUser);
   }
 
-  //Get User using Shared Preferences
-  Future<UserModel> getUser() async {
-    var preferences = await SharedPreferences.getInstance();
-    var data = preferences.getString("user");
-
-    if (data != null) {
-      return UserModel.fromMap(jsonDecode(data));
-    }
-
-    return null;
-  }
-
-  //Sign In Anonymous
-  Future<UserModel> signInAnonymous() async {
+  Future<Result> register(
+      String name, String emailAddress, String password) async {
     try {
-      AuthResult result = await _auth.signInAnonymously();
-
-      return _userFromFirebaseUser(result.user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  //Sign In With Email & Password
-  Future<UserModel> signInWithEmailPassword(
-      String email, String password) async {
-    try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
-        email: email,
+      final credential = await _auth.createUserWithEmailAndPassword(
+        email: emailAddress,
         password: password,
       );
 
-      var preferences = await SharedPreferences.getInstance();
-      await preferences.setString(
-        "user",
-        jsonEncode(
-          UserModel(
-            uid: result.user.uid,
-            email: result.user.email,
-          ).toMap(),
-        ),
+      await credential.user?.updateDisplayName(name);
+
+      return Result(
+        isSuccess: true,
+        isFailure: false,
+        data: credential,
+      );
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "weak-password":
+          return Result(
+            isSuccess: false,
+            isFailure: true,
+            error: 'The password provided is too weak.',
+          );
+        case "email-already-in-use":
+          return Result(
+            isSuccess: false,
+            isFailure: true,
+            error: 'The account already exists for that email.',
+          );
+        default:
+          return Result(
+            isSuccess: false,
+            isFailure: true,
+            error: 'An unexpected error occurred.',
+          );
+      }
+    } catch (e) {
+      return Result(
+        isSuccess: false,
+        isFailure: true,
+        error: 'An unexpected error occurred.',
+      );
+    }
+  }
+
+  Future<Result> signIn(String emailAddress, String password) async {
+    try {
+      final credential = await _auth.signInWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
       );
 
-      return _userFromFirebaseUser(result.user);
-    } catch (e) {
-      print(e.toString());
-      return null;
+      return Result(
+        isSuccess: true,
+        isFailure: false,
+        data: credential,
+      );
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case "user-not-found":
+        case "wrong-password":
+          return Result(
+            isSuccess: false,
+            isFailure: true,
+            error: "Email and password do not match.",
+          );
+        default:
+          return Result(
+            isSuccess: false,
+            isFailure: true,
+            error: "An unexpected error occurred.",
+          );
+      }
     }
   }
 
-  //Register With Email & Password
-  Future registerWithEmailPassword(String email, String password) async {
-    try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return _userFromFirebaseUser(result.user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
-
-  //Sign Out
-  Future signOut() async {
-    try {
-      var preferences = await SharedPreferences.getInstance();
-      preferences.setString("user", null);
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
+  Future<void> signOut() async {
+    await _auth.signOut();
   }
 }

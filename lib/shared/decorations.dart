@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
-  //labelText: "Password",
   labelStyle: TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 18,
